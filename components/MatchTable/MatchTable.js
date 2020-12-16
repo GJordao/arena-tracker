@@ -20,7 +20,7 @@ function getIconAndNameForSpec(specKey) {
     const specPath = spec.label.replace(" ", "").toLocaleLowerCase();
 
     return {
-        img: `/img/specs/${classPath}/${specPath}.png`,
+        img: `./img/specs/${classPath}/${specPath}.png`,
         label: spec.label
     }
 }

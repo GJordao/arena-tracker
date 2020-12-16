@@ -11,7 +11,7 @@ function getIcon(classname) {
 
 const formatGroupLabel = data => (
     <div className={styles.selectGroupHeader}>
-        <img className={styles.selectIcon} src={`/img/class/${getIcon(data.label)}.png`} />
+        <img className={styles.selectIcon} src={`./img/class/${getIcon(data.label)}.png`} />
         <span style={{ color: data.color }}>{data.label}</span>
     </div>
 );
@@ -23,7 +23,7 @@ const CustomOption = ({ innerProps, isDisabled, data }) => {
 
     return (
         <div {...innerProps} className={styles.selectOption}>
-            <img className={styles.selectIcon} src={`/img/specs/${getIcon(data.class)}/${getIcon(data.label)}.png`} />
+            <img className={styles.selectIcon} src={`./img/specs/${getIcon(data.class)}/${getIcon(data.label)}.png`} />
             {data.label}
         </div>
     );
@@ -33,7 +33,7 @@ const SingleValue = ({ children, data, ...props }) => {
     return (
         <components.SingleValue {...props}>
             <div className={styles.selectedOption} >
-                <img className={styles.selectIcon} src={`/img/specs/${getIcon(data.class)}/${getIcon(data.label)}.png`} />
+                <img className={styles.selectIcon} src={`./img/specs/${getIcon(data.class)}/${getIcon(data.label)}.png`} />
                 {data.label}
             </div>
         </components.SingleValue>

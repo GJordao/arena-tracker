@@ -153,14 +153,14 @@ export default function Old() {
                             key={wowClass.class}
                             classname={wowClass.class}
                             color={wowClass.color}
-                            icon={`/img/class/${getIcon(wowClass.class)}.png`}
+                            icon={`./img/class/${getIcon(wowClass.class)}.png`}
                         >
                             {wowClass.specs.map(spec => {
                                 return (
                                     <SpecCounter
                                         key={`${wowClass.class}${spec.name}`}
                                         name={spec.name}
-                                        icon={`/img/specs/${getIcon(wowClass.class)}/${getIcon(spec.name)}.png`}
+                                        icon={`./img/specs/${getIcon(wowClass.class)}/${getIcon(spec.name)}.png`}
                                         value={spec.counter}
                                         onChange={() => onSpecCounterChange(wowClass.class, spec.name)}
                                     />
