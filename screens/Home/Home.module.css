@@ -1,0 +1,27 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.header {
+    align-items: center;
+    background-color: cadetblue;
+    color: #e8eaed;
+    display: flex;
+    flex-direction: row;
+    height: 70px;
+    padding: 0.75rem;
+}
+
+.header h2{
+    color: #e8eaed;
+    margin-left: 0.5rem
+}
+
+.content {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    padding: 0.75rem
+}
