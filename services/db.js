@@ -1,3 +1,5 @@
+import _ from "lodash";
+
 const TWOS = 'twos';
 const THREES = 'threes';
 
@@ -25,6 +27,10 @@ class DB {
      * @param {boolean} win 
      */
     addTwoVsTwoMatch(playerOne, playerTwo, rating, win = false) {
+        if (!playerOne || playerTwo) {
+            return;
+        }
+
         const date = new Date().valueOf();
         this.twos.push({
             date,
@@ -47,6 +53,10 @@ class DB {
      * @param {boolean} win 
      */
     addThreeVsThreeMatch(playerOne, playerTwo, playerThree, rating, win = false) {
+        if (!playerOne || playerTwo || playerThree) {
+            return;
+        }
+
         const date = new Date().valueOf();
         this.threes.push({
             date,
@@ -62,6 +72,127 @@ class DB {
 
     getTwoVsTwoMatches() {
         return this.twos;
+    }
+
+    getTwosMostPlayed() {
+        const twosSpecs = [];
+        _.forEach(this.twos, match => {
+            let inArray = twosSpecs.find(spec => spec.spec === match.playerOne);
+            if (inArray) {
+                inArray.count++;
+            } else {
+                twosSpecs.push({ spec: match.playerOne, count: 1 });
+            }
+
+            inArray = twosSpecs.find(spec => spec.spec === match.playerTwo);
+            if (inArray) {
+                inArray.count++;
+            } else {
+                twosSpecs.push({ spec: match.playerTwo, count: 1 });
+            }
+        });
+
+        return _.sortBy(twosSpecs, "count", "dsc").reverse().slice(0, 3)
+    }
+
+    getTwosMostLostPercentage() {
+        const twosSpecs = [];
+        _.forEach(this.twos, match => {
+            let inArray = twosSpecs.find(spec => spec.spec === match.playerOne);
+            if (inArray) {
+                if (match.win) {
+                    inArray.wins++;
+                } else {
+                    inArray.losses++;
+                }
+            } else {
+                twosSpecs.push({
+                    spec: match.playerOne,
+                    wins: match.win ? 1 : 0,
+                    losses: match.win ? 0 : 1
+                });
+            }
+
+            if (match.playerOne === match.playerTwo) {
+                return;
+            }
+
+            inArray = twosSpecs.find(spec => spec.spec === match.playerTwo);
+            if (inArray) {
+                if (match.win) {
+                    inArray.wins++;
+                } else {
+                    inArray.losses++;
+                }
+            } else {
+                twosSpecs.push({
+                    spec: match.playerTwo,
+                    wins: match.win ? 1 : 0,
+                    losses: match.win ? 0 : 1
+                });
+            }
+        });
+
+        twosSpecs.sort((value1, value2) => {
+            const value1TotalGames = value1.wins + value1.losses;
+            const value2TotalGames = value2.wins + value2.losses;
+            const value1WinRate = value1.wins / value1TotalGames;
+            const value2WinRate = value2.wins / value2TotalGames;
+
+            if (value1WinRate > value2WinRate) {
+                return 1;
+            } else if (value1WinRate < value2WinRate) {
+                return -1;
+            } else {
+                return 0;
+            }
+        });
+
+        return _.map(twosSpecs, spec => ({
+            spec: spec.spec,
+            winRatio: spec.losses / (spec.wins + spec.losses) * 100
+        })).slice(0, 2);
+    }
+
+    getTwosMostLost() {
+        const twosSpecs = [];
+        _.forEach(this.twos, match => {
+            let inArray = twosSpecs.find(spec => spec.spec === match.playerOne);
+            if (inArray) {
+                if (match.win) {
+                    inArray.wins++;
+                } else {
+                    inArray.losses++;
+                }
+            } else {
+                twosSpecs.push({
+                    spec: match.playerOne,
+                    wins: match.win ? 1 : 0,
+                    losses: match.win ? 0 : 1
+                });
+            }
+
+            if (match.playerOne === match.playerTwo) {
+                return;
+            }
+
+            inArray = twosSpecs.find(spec => spec.spec === match.playerTwo);
+            if (inArray) {
+                if (match.win) {
+                    inArray.wins++;
+                } else {
+                    inArray.losses++;
+                }
+            } else {
+                twosSpecs.push({
+                    spec: match.playerTwo,
+                    wins: match.win ? 1 : 0,
+                    losses: match.win ? 0 : 1
+                });
+            }
+        });
+
+        return _.sortBy(twosSpecs, "losses").reverse().slice(0, 2);
     }
 
     getThreeVsThreeMatches() {

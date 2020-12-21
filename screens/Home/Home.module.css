@@ -25,3 +25,42 @@
     flex-direction: column;
     padding: 0.75rem
 }
+
+.tableTitle {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    max-width: 1200px;
+    width: 100%;
+}
+
+.tableContainer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    width: 100%;
+}
+
+.tableStatisticsContainer {
+    align-items: flex-start;
+    background-color: #d8d8d8;
+    display: flex;
+    flex-direction: column;
+    margin-left: 8px;
+    max-height: 400px;
+    padding: 8px 8px;
+    width: 190px;
+}
+
+.tableStatisticsContainer h4 {
+    margin-bottom: 8px;
+    margin-top: 8px;
+}
+
+.specCounter {
+    font-weight: bold;
+    width: 100%;
+    text-align: right;
+    margin-left: 4px;
+}

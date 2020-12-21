@@ -6,6 +6,7 @@ import DB from "./../../services/db"
 import styles from "./Home.module.css";
 // Components
 import AddButton from "./../../components/AddButton";
+import ClassDisplay from "./../../components/ClassDisplay";
 import MatchForm from "./../../components/MatchForm";
 import MatchTable from "./../../components/MatchTable";
 
@@ -86,7 +87,37 @@ export default function Home() {
                 <h2>Arena Tracker</h2>
             </header>
             <main className={styles.content}>
-                <MatchTable columns={twosColumns} data={twos} />
+                <h1 className={styles.tableTitle}>2v2</h1>
+                <div className={styles.tableContainer}>
+                    <MatchTable columns={twosColumns} data={twos} />
+                    <div className={styles.tableStatisticsContainer}>
+                        <h4>Most Played</h4>
+                        {db && db.getTwosMostPlayed().map(spec => {
+                            return (
+                                <ClassDisplay key={`most-played-${spec.spec}`} specKey={spec.spec}>
+                                    <span className={styles.specCounter}>{spec.count}</span>
+                                </ClassDisplay>
+                            );
+                        })}
+                        <h4>Most Lost %</h4>
+                        {db && db.getTwosMostLostPercentage().map(spec => {
+                            return (
+                                <ClassDisplay key={`most-lost-percentage-${spec.spec}`} specKey={spec.spec}>
+                                    <span className={styles.specCounter}>{spec.winRatio}%</span>
+                                </ClassDisplay>
+                            );
+                        })}
+                        <h4>Most Lost #</h4>
+                        {db && db.getTwosMostLost().map(spec => {
+                            return (
+                                <ClassDisplay key={`most-lost-${spec.spec}`} specKey={spec.spec}>
+                                    <span className={styles.specCounter}>{spec.losses}</span>
+                                </ClassDisplay>
+                            );
+                        })}
+                    </div>
+                </div>
+                <h1 className={styles.tableTitle}>3v3</h1>
                 <MatchTable columns={threesColumns} data={threes} />
                 <AddButton onTwosClick={toggleTwosModal} onThreesClick={toggleThreesModal} />
             </main>
